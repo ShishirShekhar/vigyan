@@ -57,7 +57,7 @@ app.post("/api/v1/thermal", async (req, res) => {
       : res.status(500).json({ message: "Error while updating" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: error });
+    res.status(500).json({ data: req.body.values, message: error });
   }
 });
 
