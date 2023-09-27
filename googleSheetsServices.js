@@ -41,7 +41,7 @@ async function updateSpreadSheetValues({
   spreadsheetId,
   auth,
   sheetName,
-  collector,
+  values,
 }) {
   const res = await sheets.spreadsheets.values.update({
     auth,
@@ -49,7 +49,7 @@ async function updateSpreadSheetValues({
     range: sheetName,
     valueInputOption: "USER_ENTERED",
     resource: {
-      values: [collector],
+      values: values,
     },
   });
 
