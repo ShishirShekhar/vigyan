@@ -45,6 +45,7 @@ app.get("/api/v1/thermal", async (req, res) => {
 app.post("/api/v1/thermal", async (req, res) => {
   try {
     const auth = await getAuthToken();
+    console.log(req.body.values)
 
     const update = await updateSpreadSheetValues({
       spreadsheetId: spreadsheetId,
