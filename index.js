@@ -52,7 +52,7 @@ app.post("/api/v1/thermal/:values", async (req, res) => {
     //   sheetName: "thermal!A:ZZ",
     //   values: req.query.values,
     // });
-    const update = req.query.values;
+    const update = req.params.values;
 
     update
       ? res.status(200).json(update)
