@@ -44,22 +44,20 @@ app.get("/api/v1/thermal", async (req, res) => {
 
 app.post("/api/v1/thermal/:values", async (req, res) => {
   try {
-    
     const auth = await getAuthToken();
-    // const update = await updateSpreadSheetValues({
-    //   spreadsheetId: spreadsheetId,
-    //   auth: auth,
-    //   sheetName: "thermal!A:ZZ",
-    //   values: req.query.values,
-    // });
-    const update = JSON.parse(req.params.values);
+    const update = await updateSpreadSheetValues({
+      spreadsheetId: spreadsheetId,
+      auth: auth,
+      sheetName: "thermal!A:ZZ",
+      values: JSON.parse(req.params.values),
+    });
 
     update
       ? res.status(200).json(update)
       : res.status(500).json({ message: "Error while updating" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ data: req.body.values, message: error });
+    res.status(500).json({ message: error });
   }
 });
 
