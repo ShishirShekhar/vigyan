@@ -42,15 +42,17 @@ app.get("/api/v1/thermal", async (req, res) => {
   }
 });
 
-app.post("/api/v1/thermal", async (req, res) => {
+app.post("/api/v1/thermal/:values", async (req, res) => {
   try {
+    
     const auth = await getAuthToken();
-    const update = await updateSpreadSheetValues({
-      spreadsheetId: spreadsheetId,
-      auth: auth,
-      sheetName: "thermal!A:ZZ",
-      values: req.body.values,
-    });
+    // const update = await updateSpreadSheetValues({
+    //   spreadsheetId: spreadsheetId,
+    //   auth: auth,
+    //   sheetName: "thermal!A:ZZ",
+    //   values: req.query.values,
+    // });
+    const update = req.query.values;
 
     update
       ? res.status(200).json(update)
