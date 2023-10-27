@@ -97,6 +97,45 @@ app.post("/api/v1/doppler/:values", async (req, res) => {
   }
 });
 
+app.get("/api/v1/img", async (req, res) => {
+  try {
+    const auth = await getAuthToken();
+    const sheet = await getSpreadSheetValues({
+      spreadsheetId: spreadsheetId,
+      auth: auth,
+      sheetName: "img!A:ZZ",
+    });
+    const values = sheet.data.values;
+
+    res.status(200).json(values);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: error });
+  }
+});
+
+app.post("/api/v1/img", async (req, res) => {
+  try {
+    const image = req.body;
+    console.log(image);
+
+    const auth = await getAuthToken();
+    const update = await updateSpreadSheetValues({
+      spreadsheetId: spreadsheetId,
+      auth: auth,
+      sheetName: "img!A:ZZ",
+      values: req.body,
+    });
+
+    update
+      ? res.status(200).json(update)
+      : res.status(500).json({ message: "Error while updating" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: error });
+  }
+});
+
 app.listen(port, () => {
   // Use the port variable
   console.log(`Server is running on port ${port}`);
