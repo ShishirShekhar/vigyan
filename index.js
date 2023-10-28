@@ -15,8 +15,8 @@ const port = process.env.PORT || 8000;
 const spreadsheetId = "1t97SfWgrn_JpG_N1Gf8JCn8Fs-XOcjuGq-30CccC_oo";
 
 // Middleware
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
+app.use(bodyParser.json({ limit: "50mb" }));
 app.use(cors());
 
 // Routes
@@ -116,15 +116,12 @@ app.get("/api/v1/img", async (req, res) => {
 
 app.post("/api/v1/img", async (req, res) => {
   try {
-    const image = req.body;
-    console.log(image);
-
     const auth = await getAuthToken();
     const update = await updateSpreadSheetValues({
       spreadsheetId: spreadsheetId,
       auth: auth,
       sheetName: "img!A:ZZ",
-      values: req.body,
+      values: req.body.image,
     });
 
     update
